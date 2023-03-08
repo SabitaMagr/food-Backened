@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose/dist';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
 import { Register } from './entities/register.entity';
@@ -11,14 +12,16 @@ export class RegisterService {
   constructor(
     @InjectModel(Register.name) private  registerModal:Model<Register>,
   ){}
-
-  create(createRegisterDto: CreateRegisterDto) {
-    const register=this.registerModal.create({
+  
+  async create(createRegisterDto: CreateRegisterDto) {
+    const hashPassowrd=await bcrypt.hash(createRegisterDto.password, 10);
+    const register=await this.registerModal.create({
       name:createRegisterDto.name,
       email:createRegisterDto.email,
-      password:createRegisterDto.password,
+      password:hashPassowrd,
     });
-    return register;
+    
+    return {_id:register._id,name:register?.name};
   }
 
   findAll() {

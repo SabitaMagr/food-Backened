@@ -2,8 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 //input data that might come from frontend
 
 export class CreateRegisterDto {
-@ApiProperty()
-id:Number;
 
 @ApiProperty()
 name:string;
