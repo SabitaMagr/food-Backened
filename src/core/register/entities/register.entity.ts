@@ -3,6 +3,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose/dist";
 @Schema()
 export class Register {
     @Prop({
+        type:Number,
+    })
+    id:number;
+    @Prop({
         type:String,
     })
     name:string;
@@ -16,11 +20,6 @@ export class Register {
         type:String,
     })
     password:string;
-
-    @Prop({
-        type:String,
-    })
-    rePassword:string;
 }
 
 export const registerSchema =SchemaFactory.createForClass(Register);

@@ -17,7 +17,6 @@ export class RegisterService {
       name:createRegisterDto.name,
       email:createRegisterDto.email,
       password:createRegisterDto.password,
-      rePassword:createRegisterDto.rePassword,
     });
     return register;
   }
