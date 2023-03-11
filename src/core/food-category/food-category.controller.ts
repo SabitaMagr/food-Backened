@@ -3,7 +3,7 @@ import { FoodCategoryService } from './food-category.service';
 import { CreateFoodCategoryDto } from './dto/create-food-category.dto';
 import { UpdateFoodCategoryDto } from './dto/update-food-category.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { response, Response } from 'express';
+import { Response } from 'express';
 
 @Controller('food-category')
 @ApiTags('food-category')
@@ -56,13 +56,14 @@ export class FoodCategoryController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Res() response: Response) {
     // return this.foodCategoryService.remove(+id);
     try {
       const allFoodCategory = await this.foodCategoryService.remove(id);
-      return response.send({ data: allFoodCategory, message: 'Food Category Successfully Deleted!' }).status(201);
+      response.send({ data: allFoodCategory, message: 'Food Category Successfully Deleted!' }).status(201);
     } catch (e) {
-      response.send({ data: null, message: 'Internal Server Error' }).status(500);
+      console.log(e)
+      response.status(500).send({ data: null, message: 'Internal Server Error' });
     }
   }
 }

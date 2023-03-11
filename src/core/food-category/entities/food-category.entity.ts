@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose/dist";
+import mongoose, { Document } from "mongoose";
 
 @Schema()
-export class FoodCategory {
+export class FoodCategory extends Document {
+
     @Prop({
         type: String,
     })
@@ -16,3 +18,15 @@ export class FoodCategory {
 
 export const foodCategorySchema = SchemaFactory.createForClass(FoodCategory);
 
+
+foodCategorySchema.set('toJSON', {
+    virtuals: true,
+    transform: (doc, ret) => {
+        delete ret._id;
+        delete ret.__v;
+    },
+});
+
+// // foodCategorySchema.virtual('id').get(function () {
+// //     return this._id.toHexString();
+// // });

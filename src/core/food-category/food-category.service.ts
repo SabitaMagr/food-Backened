@@ -31,11 +31,13 @@ export class FoodCategoryService {
   }
 
   update(id: string, updateFoodCategoryDto: UpdateFoodCategoryDto) {
-    return this.foodCategoryModal.updateOne({ _id: id }), updateFoodCategoryDto;
+    return this.foodCategoryModal.updateOne({ _id: id }, updateFoodCategoryDto);
   }
 
-  remove(id: string) {
-    return this.foodCategoryModal.deleteOne({ _id: id });
+  async remove(id: string) {
+    return this.foodCategoryModal.deleteOne({ _id: id }).exec();
+
+
   }
 
 }

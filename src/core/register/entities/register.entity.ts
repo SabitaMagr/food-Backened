@@ -2,34 +2,40 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose/dist";
 
 @Schema()
 export class Register {
-    @Prop({
-        type:Number,
-    })
-    id:number;
-    @Prop({
-        type:String,
-    })
-    name:string;
 
     @Prop({
-        type:String,
+        type: String,
     })
-    email:string;
+    name: string;
 
     @Prop({
-        type:String,
+        type: String,
     })
-    password:string;
+    email: string;
+
+    @Prop({
+        type: String,
+    })
+    password: string;
 }
 
-export const registerSchema =SchemaFactory.createForClass(Register);
+export const registerSchema = SchemaFactory.createForClass(Register);
 
-/*list of mongo db data type
-   String 
-   Integer
-   Double
-   Boolean
-   Array;
-   etc...
-*/
+registerSchema.set('toJSON', {
+    virtuals: true,
+    transform: (doc, ret) => {
+        delete ret._id;
+        delete ret.__v;
+    },
+});
 
+registerSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+
+// @Prop([{
+//     type: String,
+
+// }])
+// email: string[];
