@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
+import { Food } from './entities/food.entity';
 
 @Injectable()
 export class FoodService {
-  create(createFoodDto: CreateFoodDto) {
-    return 'This action adds a new food';
+  constructor(
+    @InjectModel(Food.name) private foodModel: Model<Food>,
+  ) { }
+  async create(CreateFoodDto: CreateFoodDto) {
+    const food = await this.foodModel.create({
+      name: CreateFoodDto.name,
+      categoryType: CreateFoodDto.categoryType,
+      price: CreateFoodDto.price,
+      photo: CreateFoodDto.photo,
+      status: CreateFoodDto.status,
+    });
+    return food;
   }
 
   findAll() {
-    return `This action returns all food`;
+    return this.foodModel.find({}, { __v: 0 });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} food`;
+  findOne(id: string) {
+    return this.foodModel.findOne({ _id: id });
   }
 
-  update(id: number, updateFoodDto: UpdateFoodDto) {
-    return `This action updates a #${id} food`;
+  update(id: string, updateFoodDto: UpdateFoodDto) {
+    return this.foodModel.updateOne({ _id: id }, updateFoodDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} food`;
+  remove(id: string) {
+    return this.foodModel.deleteOne({ _id: id }).exec();
   }
 }

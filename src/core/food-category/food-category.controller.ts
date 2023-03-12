@@ -10,6 +10,7 @@ import { Response } from 'express';
 
 export class FoodCategoryController {
   constructor(private readonly foodCategoryService: FoodCategoryService) { }
+
   @Post()
   async create(@Body() createFoodCategoryDto: CreateFoodCategoryDto, @Res() response: Response) {
     try {

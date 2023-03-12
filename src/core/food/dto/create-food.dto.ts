@@ -1,1 +1,18 @@
-export class CreateFoodDto {}
+import { ApiProperty } from '@nestjs/swagger';
+
+export class CreateFoodDto {
+    @ApiProperty()
+    name: string;
+
+    @ApiProperty()
+    categoryType: string;
+
+    @ApiProperty()
+    price: number;
+
+    @ApiProperty()
+    photo: string;
+
+    @ApiProperty()
+    status: string;
+}
