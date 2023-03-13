@@ -7,22 +7,20 @@ import { Food } from './entities/food.entity';
 
 @Injectable()
 export class FoodService {
-  constructor(
-    @InjectModel(Food.name) private foodModel: Model<Food>,
-  ) { }
-  async create(CreateFoodDto: CreateFoodDto) {
+  constructor(@InjectModel(Food.name) private foodModel: Model<Food>) {}
+  async create(CreateFoodDto: CreateFoodDto, photo: Express.Multer.File) {
     const food = await this.foodModel.create({
       name: CreateFoodDto.name,
       categoryType: CreateFoodDto.categoryType,
       price: CreateFoodDto.price,
-      photo: CreateFoodDto.photo,
+      photo: photo.filename,
       status: CreateFoodDto.status,
     });
     return food;
   }
 
   findAll() {
-    return this.foodModel.find({}, { __v: 0 });
+    return this.foodModel.find({}, { __v: 0 }).populate('categoryType');
   }
 
   findOne(id: string) {

@@ -10,14 +10,15 @@ async function bootstrap() {
     .setTitle('User Registration System')
     .setDescription('API description for me')
     .setVersion('1')
+    .addServer('/api')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   // app.enableCors({ origin: ['localhost:3000'] })
-  app.enableCors()
+  app.enableCors();
+  app.setGlobalPrefix('/api');
   await app.listen(5000);
-
 }
 bootstrap();
