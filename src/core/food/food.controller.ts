@@ -9,6 +9,7 @@ import {
   Res,
   UseInterceptors,
   UploadedFile,
+  Put,
 } from '@nestjs/common';
 import { FoodService } from './food.service';
 import { CreateFoodDto } from './dto/create-food.dto';
@@ -22,7 +23,7 @@ import { editFileName } from 'src/utils/multer';
 @Controller('food')
 @ApiTags('food')
 export class FoodController {
-  constructor(private readonly foodService: FoodService) {}
+  constructor(private readonly foodService: FoodService) { }
 
   @Post()
   @UseInterceptors(
@@ -75,15 +76,24 @@ export class FoodController {
         .status(500);
     }
   }
-
-  @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('photo', {
+      storage: diskStorage({
+        destination: './public/food',
+        filename: editFileName,
+      }),
+    }),
+  )
+  @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updateFoodDto: UpdateFoodDto,
     @Res() response: Response,
+    @UploadedFile() photo: Express.Multer.File,
   ) {
+    console.log(photo)
     try {
-      const allFood = await this.foodService.update(id, updateFoodDto);
+      const allFood = await this.foodService.update(id, updateFoodDto, photo);
       return response
         .send({ data: allFood, message: 'Successfully Updated!' })
         .status(201);

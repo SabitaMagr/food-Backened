@@ -71,8 +71,19 @@ export class RegisterController {
   }
 
 
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registerService.remove(+id);
+  async remove(@Param('id') id: string, @Res() response: Response) {
+    try {
+      const register = await this.registerService.remove(id);
+      response
+        .send({ data: register, message: 'User  Successfully Deleted!' })
+        .status(201);
+    } catch (e) {
+      console.log(e);
+      response
+        .status(500)
+        .send({ data: null, message: 'Internal Server Error' });
+    }
   }
 }

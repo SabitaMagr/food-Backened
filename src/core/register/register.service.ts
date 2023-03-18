@@ -38,7 +38,7 @@ export class RegisterService {
     return this.registerModal.updateOne({ _id: id }), updateRegisterDto;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.registerModal.deleteOne({ _id: id });
   }
 }
