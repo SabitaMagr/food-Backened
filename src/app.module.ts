@@ -7,6 +7,7 @@ import { FoodCategoryModule } from './core/food-category/food-category.module';
 import { FoodModule } from './core/food/food.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CustomerReviewModule } from './core/customer-review/customer-review.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -17,6 +18,7 @@ import { join } from 'path';
     RegisterModule,
     FoodCategoryModule,
     FoodModule,
+    CustomerReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
