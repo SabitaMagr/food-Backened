@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  // swagger connection start 
   const config = new DocumentBuilder()
     .setTitle('User Registration System')
     .setDescription('API description for me')
@@ -16,9 +16,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  // swagger connection end 
+
   // app.enableCors({ origin: ['localhost:3000'] })
-  app.enableCors();
-  app.setGlobalPrefix('/api');
-  await app.listen(5000);
+  app.enableCors();   //accept all the request
+  app.setGlobalPrefix('/api');   ///5000/api wala 
+  await app.listen(5000);   //server port no 
 }
 bootstrap();
