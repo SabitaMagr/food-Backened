@@ -22,6 +22,11 @@ export class Food {
   @Prop({
     type: String,
   })
+  description: string;
+
+  @Prop({
+    type: String,
+  })
   status: string;
 
   @Prop({

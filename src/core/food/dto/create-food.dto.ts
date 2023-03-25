@@ -11,6 +11,9 @@ export class CreateFoodDto {
     price: number;
 
     @ApiProperty()
+    description: string;
+
+    @ApiProperty()
     photo: string;
 
     @ApiProperty()

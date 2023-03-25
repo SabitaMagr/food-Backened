@@ -13,6 +13,7 @@ export class FoodService {
       name: CreateFoodDto.name,
       categoryType: CreateFoodDto.categoryType,
       price: CreateFoodDto.price,
+      description: CreateFoodDto.price,
       photo: photo.filename,
       status: CreateFoodDto.status,
     });
@@ -32,7 +33,8 @@ export class FoodService {
     food.name = updateFoodDto?.name,
       food.categoryType = updateFoodDto?.categoryType,
       food.price = updateFoodDto?.price,
-      food.status = updateFoodDto?.status
+      food.status = updateFoodDto?.status,
+      food.description = updateFoodDto?.description
     if (photo) {
       food.photo = photo?.filename;
     }
