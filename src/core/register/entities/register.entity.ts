@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose/dist";
 
 @Schema()
-export class Register {
+export class User {
 
     @Prop({
         type: String,
@@ -17,9 +17,26 @@ export class Register {
         type: String,
     })
     password: string;
+
+
+    @Prop({
+        type: String,
+    })
+    role: string;
+
+    @Prop({
+        type: String,
+    })
+    address: string;
+
+    @Prop({
+        type: Number,
+    })
+    phoneNumber: number;
+
 }
 
-export const registerSchema = SchemaFactory.createForClass(Register);
+export const registerSchema = SchemaFactory.createForClass(User);
 
 registerSchema.set('toJSON', {
     virtuals: true,

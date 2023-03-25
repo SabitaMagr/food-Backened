@@ -13,6 +13,9 @@ import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
 import { ApiTags } from '@nestjs/swagger/dist';
 import { Response } from 'express';
+import { User } from './entities/register.entity';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 //all the business logic for employee related
 //global prefix (employee) for employee module
 
@@ -26,6 +29,11 @@ export class RegisterController {
   @Post()
   async create(@Body() createRegisterDto: CreateRegisterDto, @Res() response: Response) {
     try {
+      const emailExt = await this.registerService.findOneUsingEmail(createRegisterDto.email)
+      if (emailExt) {
+        //frontend ma popup message falne hai email already exist vanera
+        response.send({ message: 'Email already registered try another email', status: false }).status(400);
+      }
       const allUSers = await this.registerService.create(createRegisterDto);
       response.send({ data: allUSers, message: 'Success!!' }).status(201);
     } catch (e) {

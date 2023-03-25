@@ -4,13 +4,13 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
-import { Register } from './entities/register.entity';
+import { User } from './entities/register.entity';
 
 @Injectable()
 export class RegisterService {
   //on constructer we inject register model instance to intract with employee collection in db
   constructor(
-    @InjectModel(Register.name) private registerModal: Model<Register>,
+    @InjectModel(User.name) private registerModal: Model<User>,
   ) { }
 
   async create(createRegisterDto: CreateRegisterDto) {
@@ -18,6 +18,9 @@ export class RegisterService {
     const register = await this.registerModal.create({
       name: createRegisterDto.name,
       email: createRegisterDto.email,
+      role: createRegisterDto.role,
+      address: createRegisterDto.address,
+      phoneNumber: createRegisterDto.phoneNumber,
       password: hashPassowrd,
     });
     const { password, ...rest } = register;
@@ -32,6 +35,11 @@ export class RegisterService {
 
   findOne(id: string) {
     return this.registerModal.findOne({ _id: id });
+  }
+
+  async findOneUsingEmail(email: string): Promise<User | undefined> {
+    //finding user record using email
+    return await this.registerModal.findOne({ email: email });
   }
 
   update(id: string, updateRegisterDto: UpdateRegisterDto) {

@@ -3,12 +3,21 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateRegisterDto {
 
-@ApiProperty()
-name:string;
+    @ApiProperty()
+    name: string;
 
-@ApiProperty()
-email:string;
+    @ApiProperty()
+    email: string;
 
-@ApiProperty()
-password:string;
+    @ApiProperty()
+    password: string;
+
+    @ApiProperty()
+    phoneNumber: number;
+
+    @ApiProperty()
+    address: string;
+
+    @ApiProperty()
+    role: string;
 }
