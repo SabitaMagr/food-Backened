@@ -9,9 +9,7 @@ import { User } from './entities/register.entity';
 @Injectable()
 export class RegisterService {
   //on constructer we inject register model instance to intract with employee collection in db
-  constructor(
-    @InjectModel(User.name) private registerModal: Model<User>,
-  ) { }
+  constructor(@InjectModel(User.name) private registerModal: Model<User>) {}
 
   async create(createRegisterDto: CreateRegisterDto) {
     const hashPassowrd = await bcrypt.hash(createRegisterDto.password, 10);
@@ -37,9 +35,9 @@ export class RegisterService {
     return this.registerModal.findOne({ _id: id });
   }
 
-  async findOneUsingEmail(email: string): Promise<User | undefined> {
+  findOneUsingEmail(email: string) {
     //finding user record using email
-    return await this.registerModal.findOne({ email: email });
+    return this.registerModal.findOne({ email: email }).exec();
   }
 
   update(id: string, updateRegisterDto: UpdateRegisterDto) {
