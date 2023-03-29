@@ -17,6 +17,10 @@ export class Delivery {
     })
     receiverAddress: string;
 
+    @Prop({
+        type: Number,
+    })
+    receiverPhoneNo: string;
 
     @Prop({
         type: Date,
@@ -32,7 +36,6 @@ export class Delivery {
         type: Number,
     })
     phoneNumber: number;
-
 
     @Prop({
         type: String,
