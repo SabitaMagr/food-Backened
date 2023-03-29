@@ -10,6 +10,7 @@ import { join } from 'path';
 import { CustomerReviewModule } from './core/customer-review/customer-review.module';
 import { AuthModule } from './core/auth/auth.module';
 import { DeliveryModule } from './core/delivery/delivery.module';
+import { OrderModule } from './core/order/order.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -23,6 +24,7 @@ import { DeliveryModule } from './core/delivery/delivery.module';
     CustomerReviewModule,
     AuthModule,
     DeliveryModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
