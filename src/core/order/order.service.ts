@@ -8,26 +8,28 @@ import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<Order>) { }
+  constructor(@InjectModel(Order.name) private orderModel: Model<Order>,
+    private deliveryService: DeliveryService
+  ) { }
   async create(createOrderDto: CreateOrderDto) {
     //save delivery 
-    // const delivery = await this.deliveryService.create(createOrderDto?.delivery)
-    //save order  in loop
-    // if (delivery) {
-    //   for (let order of createOrderDto?.order) {
-    //     let od = await this.orderModel.create({
-    //       deliveryId: delivery.id,
-    //       foodId: order?.foodId,
-    //       quantity: order?.quantity,
-    //       userId: order?.userId
-    //     })
-    //   }
-    // }
+    const delivery = await this.deliveryService.create(createOrderDto?.delivery)
+    // save order  in loop
+    if (delivery) {
+      for (let order of createOrderDto?.order) {
+        let od = await this.orderModel.create({
+          deliveryId: delivery.id,
+          foodId: order?.foodId,
+          quantity: order?.quantity,
+          userId: order?.userId
+        })
+      }
+    }
 
     // const order = await this.orderModel.create({
-    //   foodId:createOrderDto?.
+    //   foodId: createOrderDto?.
     // });
-    // return order;
+    return "success";
   }
 
   findAll() {
